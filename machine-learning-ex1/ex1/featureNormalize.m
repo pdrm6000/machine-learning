@@ -26,12 +26,15 @@ sigma = zeros(1, size(X, 2));
 % Hint: You might find the 'mean' and 'std' functions useful.
 %       
 
+numCol = size(X_norm)(2);
 
-
-
-
-
-
+for i = 1:numCol
+  meanCol = mean(X_norm(:,i));
+  deviation = std(X_norm(:,i));
+  X_norm(:,i) = (X_norm(:,i) .- meanCol) ./ deviation;
+  mu(1, i) = meanCol;
+  sigma(1, i) = deviation;
+endfor
 
 
 % ============================================================
