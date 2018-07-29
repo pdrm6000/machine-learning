@@ -51,6 +51,11 @@ fprintf('Normalizing Features ...\n');
 
 [X mu sigma] = featureNormalize(X);
 
+X
+mu
+sigma
+
+
 % Add intercept term to X
 X = [ones(m, 1) X];
 
@@ -104,7 +109,11 @@ fprintf('\n');
 % ====================== YOUR CODE HERE ======================
 % Recall that the first column of X is all-ones. Thus, it does
 % not need to be normalized.
-price = 0; % You should change this
+rawData = [1650, 3];
+mean = (rawData .- mu);
+scaledData = (mean ./ sigma);
+scaledData = [ones(1) scaledData];
+price = (scaledData * theta); 
 
 
 % ============================================================

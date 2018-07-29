@@ -18,14 +18,10 @@ for iter = 1:num_iters
     %
 
 
-
-
-
-
-
-
-
-
+  for i = 1:size(X,2)
+    cost1 = sum(((X * theta)-y).* X(:,i));
+    theta(i) = theta(i) - ((alpha * (1/m)) * cost1);
+  endfor
 
     % ============================================================
 
