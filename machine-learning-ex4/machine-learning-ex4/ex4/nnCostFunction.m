@@ -30,13 +30,17 @@ J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
 
+
+
+
+
 X = [ones(m, 1) X];
 
 a = sigmoid(X * Theta1');
 a = [ones(m, 1) a];
 hOx = sigmoid(a * Theta2');
 
-%This can be generated with matrices operation somethings like yvec(1=y)
+%This can be generated with matrices operation somethings like yvec(1=y) LOGICAL ARRAY
 %TODO fix, I don't remember now
 yvec = zeros(5000, 10);
 for i=1:5000
@@ -51,32 +55,11 @@ endfor
 
 J = (1/m) * J;
 
-%for i=1:m
-%  for k=1:num_labels
-%    yvec = zeros(10, 1);
-%    yvec(k) = 1;
-   
-%    localHOX = hOx(i,k);
-%    localY = 0;
-%    if (k == y(i))
-%      localY = 1;
-%    endif
-%    J =  J + (((-1.* localY) .* log(localHOX)) - ((1.-localY) .* log(1.- localHOX )) );  
-%  endfor
-%endfor
-%J = (1/m) * J;
+l1 = sum(sum(Theta1(:, 2:end).^2));
+l2 = sum(sum(Theta2(:, 2:end).^2));
 
+J =  J + (lambda/(2*m)) * (l1 + l2);
 
-
-
-
-
-%J = J + ((lambda / (2*m))*sum(theta(2:end,:).^2));
-
-
-%
-%grad = ((1/m) * (X')) * (sigmoid(X * theta) .- y);
-%grad(2:end,:) = grad(2:end,:) + ((lambda / m) * (theta(2:end,:)));
 
 
 
@@ -113,8 +96,23 @@ J = (1/m) * J;
 %               and Theta2_grad from Part 2.
 %
 
+acum = 0;
 
+for t = 1:m
 
+a2 = sigmoid(X(t) * Theta1(t)');
+a2 = [ones(m, 1) a2];
+a3 = sigmoid(a2 * Theta2');
+
+  
+  d3 = a3 - ([1;2;3;4;5;6;7;8;9;10] == y(t));
+  
+  d2 = (d3 * Theta2') .* sigmoidGradient(a2 * Theta2');
+  d2 = d2(2:end);
+  
+  acum = acum + (a2' * d3);
+  
+endfor
 
 
 
