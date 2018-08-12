@@ -42,8 +42,8 @@ hOx = sigmoid(a * Theta2');
 
 %This can be generated with matrices operation somethings like yvec(1=y) LOGICAL ARRAY
 %TODO fix, I don't remember now
-yvec = zeros(5000, 10);
-for i=1:5000
+yvec = zeros(m, num_labels);
+for i=1:m
   yvec(i, y(i)) = 1;
 endfor
 
@@ -96,35 +96,32 @@ J =  J + (lambda/(2*m)) * (l1 + l2);
 %               and Theta2_grad from Part 2.
 %
 
-acum = 0;
+acum2 = 0;
+acum1 = 0;
 
 for t = 1:m
-
-a2 = sigmoid(X(t) * Theta1(t)');
-a2 = [ones(m, 1) a2];
+  
+a1 = X(t, 1:end);
+z2 = a1 * Theta1';
+a2 = sigmoid(z2);
+a2 = [ones(1, 1) a2];
 a3 = sigmoid(a2 * Theta2');
 
   
-  d3 = a3 - ([1;2;3;4;5;6;7;8;9;10] == y(t));
+  d3 = a3 - ([1:num_labels] == y(t));
   
-  d2 = (d3 * Theta2') .* sigmoidGradient(a2 * Theta2');
-  d2 = d2(2:end);
+  d2 = (d3 * Theta2(:,2:end)) .* sigmoidGradient(z2);  %sigmoidGradient(a2 * Theta2');
   
-  acum = acum + (a2' * d3);
+  acum2 = acum2 + (d3' * a2);
+  acum1 = acum1 + (d2' * a1);
   
 endfor
 
+Theta2_grad = (1/m) .* acum2;
+Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + ((lambda/m) * Theta2(:,2:end));
 
-
-
-
-
-
-
-
-
-
-
+Theta1_grad = (1/m) .* acum1;
+Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + ((lambda/m) * Theta1(:,2:end));
 
 
 
