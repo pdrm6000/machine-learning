@@ -23,27 +23,27 @@ sigma = 0.1;
 %        mean(double(predictions ~= yval))
 %
 
-error = 1000000;
-bestC = 1000;
-bestSigma = 1000;
-values = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
-for i = values
-  for j =  values
+%error = 1000000;
+%bestC = 1000;
+%bestSigma = 1000;
+%values = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+%for i = values
+%  for j =  values
     
-    model= svmTrain(X, y, i, @(x1, x2) gaussianKernel(x1, x2, j)); 
-    predictions = svmPredict(model, Xval);
-    localError = mean(double(predictions ~= yval));
+%    model= svmTrain(X, y, i, @(x1, x2) gaussianKernel(x1, x2, j)); 
+%    predictions = svmPredict(model, Xval);
+%    localError = mean(double(predictions ~= yval));
     
-    if (localError<error)
-      bestC = i;
-      bestSigma = j;
-      error = localError;
-    endif
-  endfor
-endfor
+%    if (localError<error)
+%      bestC = i;
+%      bestSigma = j;
+%      error = localError;
+%    endif
+%  endfor
+%endfor
 
-C = bestC;
-sigma = bestSigma;
+%C = bestC;
+%sigma = bestSigma;
 
 
 
